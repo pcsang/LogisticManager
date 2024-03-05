@@ -10,6 +10,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -33,5 +36,13 @@ public class Package {
 
     @OneToOne(mappedBy = "packages")
     private Order order;
+
+    @ManyToOne
+    @JoinTable(name = "order_package",
+    joinColumns =
+            {@JoinColumn(name = "package_id", referencedColumnName = "id")},
+    inverseJoinColumns =
+            {@JoinColumn(name = "delivery_service_id", referencedColumnName = "id")})
+    private DeliveryService deliveryService;
 
 }

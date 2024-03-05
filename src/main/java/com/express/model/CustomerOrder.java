@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Set;
 
 @Data
 @Builder
@@ -28,4 +31,6 @@ public class CustomerOrder {
     private String emailCustomer;
     @Column(name = "address_customer")
     private String addressCustomer;
+    @OneToMany(mappedBy = "customerOrder")
+    private Set<Order> orderSet;
 }

@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -41,4 +42,18 @@ public class Order {
     inverseJoinColumns =
             {@JoinColumn(name = "package_id", referencedColumnName = "id")})
     private Package packages;
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_employees_id")
+    private UserEmployee userEmployees;
+
+
+    @ManyToOne
+    @JoinColumn(name = "customer_order_id")
+    private CustomerOrder customerOrder;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private Receiver receiver;
 }
