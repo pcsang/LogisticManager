@@ -1,6 +1,10 @@
 package com.express.controller;
 
 import com.express.model.UserEmployee;
+import com.express.model.request.Employee;
+import com.express.model.response.EmployeesDTO;
+import com.express.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,28 +13,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/employee/v1")
 public class EmployeeController {
+    private final EmployeeService employeeService;
 
-
-    @GetMapping("")
-    public Set<UserEmployee> getAll() {
-        Set<UserEmployee> userEmployees = new HashSet<>(  );
-        return userEmployees;
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping("")
-    public UserEmployee getEmployeeById(@RequestParam String id) {
-        return new UserEmployee();
+    public List<EmployeesDTO> getAll() {
+        return employeeService.getAllEmployees();
+    }
+
+    @GetMapping("")
+    public EmployeesDTO getEmployeeById(@RequestParam String id) {
+        return employeeService.getEmployeeById(id);
     }
 
     @PostMapping("/register")
-    public UserEmployee registerEmployee(@RequestBody UserEmployee userEmployee) {
-        return userEmployee;
+    public EmployeesDTO registerEmployee(@RequestBody Employee userEmployee) {
+        return employeeService.postEmployee(userEmployee);
     }
 
     @PostMapping("/update")

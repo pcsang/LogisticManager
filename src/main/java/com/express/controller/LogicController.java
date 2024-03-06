@@ -2,6 +2,10 @@ package com.express.controller;
 
 import com.express.model.Order;
 import com.express.model.Package;
+import com.express.model.request.OrderRequest;
+import com.express.model.response.OrderInfo;
+import com.express.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +20,17 @@ import java.util.Set;
 @RestController
 @RequestMapping("/logic/v1")
 public class LogicController {
+    private final OrderService orderService;
+
+    /**
+     * Constructor of LogicController
+     * @param orderService orderService
+     */
+    @Autowired
+    public LogicController(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
     @GetMapping("/orders")
     public Set<Order> getOrders() {
         Set<Order> orders = new HashSet<>();
@@ -28,8 +43,8 @@ public class LogicController {
     }
 
     @PostMapping("/orders")
-    public Order postOrder(@RequestBody Order order) {
-        return new Order();
+    public OrderInfo postOrder(@RequestBody OrderRequest orderRequest) {
+        return orderService.postOrder(orderRequest);
     }
 
     @PostMapping("/orders")

@@ -39,4 +39,7 @@ public class UserEmployee {
     @OneToMany(mappedBy = "userEmployees")
     private Set<Order> orderList;
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }

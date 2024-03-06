@@ -56,4 +56,68 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "receiver_id")
     private Receiver receiver;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNameOrder() {
+        return nameOrder;
+    }
+
+    public void setNameOrder(String nameOrder) {
+        this.nameOrder = nameOrder;
+    }
+
+    public String getTypeOrder() {
+        return typeOrder;
+    }
+
+    public void setTypeOrder(String typeOrder) {
+        this.typeOrder = typeOrder;
+    }
+
+    public OrderDetails getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(OrderDetails orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    public Package getPackages() {
+        return packages;
+    }
+
+    public void setPackages(Package packages) {
+        this.packages = packages;
+    }
+
+    public UserEmployee getUserEmployees() {
+        return userEmployees;
+    }
+
+    public void setUserEmployees(UserEmployee userEmployees) {
+        this.userEmployees = userEmployees;
+    }
+
+    public CustomerOrder getCustomerOrder() {
+        return customerOrder;
+    }
+
+    public void setCustomerOrder(CustomerOrder customerOrder) {
+        this.customerOrder = customerOrder;
+    }
+
+    public Receiver getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Receiver receiver) {
+        this.receiver = receiver;
+    }
 }
