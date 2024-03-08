@@ -50,10 +50,10 @@ public class EmployeeService {
     }
 
     public EmployeesDTO postEmployee(Employee userEmployee) {
-        List<UserEmployee> employeeExisted = employeeRepository.findEmployeeByEmail(userEmployee.getEmail());
-        if (!ObjectUtils.isEmpty(employeeExisted)) {
-            throw new IllegalArgumentException("Email existed!");
-        }
+//        UserEmployee employeeExisted = employeeRepository.findByEmail(userEmployee.getEmail());
+//        if (!ObjectUtils.isEmpty(employeeExisted)) {
+//            throw new IllegalArgumentException("Email existed!");
+//        }
         String idEmployee = UUID.randomUUID().toString();
         UserEmployee user = new UserEmployee();
         BeanUtils.copyProperties(userEmployee, user);

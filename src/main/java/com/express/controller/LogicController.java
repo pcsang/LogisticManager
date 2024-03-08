@@ -37,7 +37,7 @@ public class LogicController {
         return orders;
     }
 
-    @GetMapping("/orders")
+    @GetMapping("/order")
     public Order getOrderById(@RequestParam String id) {
         return new Order();
     }
@@ -47,7 +47,7 @@ public class LogicController {
         return orderService.postOrder(orderRequest);
     }
 
-    @PostMapping("/orders")
+    @PostMapping("/orders/update")
     public Order updateOrder(@RequestBody Order order, @RequestParam String id) {
         return new Order();
     }

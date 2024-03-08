@@ -2,6 +2,7 @@ package com.express.service;
 
 import com.express.model.CustomerOrder;
 import com.express.model.Order;
+import com.express.model.OrderDetails;
 import com.express.model.Receiver;
 import com.express.model.request.CustomerOrderDTO;
 import com.express.model.request.OrderDTO;
@@ -40,6 +41,9 @@ public class OrderService {
     }
 
     public OrderInfo postOrder(OrderRequest orderRequest) {
+        //TODO need to insert data into tables relationship foreign key with main table
+        //receiver, CustomerOrder, etc..
+        // order
         String id = UUID.randomUUID().toString();
 
         //Save CustomerOrder
@@ -58,12 +62,19 @@ public class OrderService {
         receiverDTO.setId("R-" + id);
         receiverRepository.save(receiver);
 
+        OrderDetails orderDetails = new OrderDetails();
+        orderDetails.setId(id);
+        orderDetails.setPrice(100);
+
         //Save order
         OrderDTO orderDTO = orderRequest.getOrder();
         Order order = new Order();
         BeanUtils.copyProperties(orderDTO, order);
         order.setId(id);
         orderDTO.setId(id);
+        order.setCustomerOrder(customerOrder);
+        order.setReceiver(receiver);
+        order.setOrderDetails(orderDetails);
         orderRepository.save(order);
 
         //Mapping order info

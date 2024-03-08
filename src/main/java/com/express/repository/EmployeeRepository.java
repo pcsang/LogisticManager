@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<UserEmployee, String> {
-    @Query("SELECT employee FROM user_employee employee WHERE employee.email LIKE ?1")
-    List<UserEmployee> findEmployeeByEmail(String email);
+//    @Query("SELECT e  FROM user_employee e WHERE e.email = ?1")
+//    UserEmployee findByEmail(String email);
 
 }

@@ -31,7 +31,7 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping("")
+    @GetMapping("/employee")
     public EmployeesDTO getEmployeeById(@RequestParam String id) {
         return employeeService.getEmployeeById(id);
     }
