@@ -1,5 +1,6 @@
 package com.express.model;
 
+import com.express.model.entities.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -51,7 +52,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "customer_order_id")
-    private CustomerOrder customerOrder;
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id")
@@ -105,12 +106,12 @@ public class Order {
         this.userEmployees = userEmployees;
     }
 
-    public CustomerOrder getCustomerOrder() {
-        return customerOrder;
+    public Customer getCustomerOrder() {
+        return customer;
     }
 
-    public void setCustomerOrder(CustomerOrder customerOrder) {
-        this.customerOrder = customerOrder;
+    public void setCustomerOrder(Customer customer) {
+        this.customer = customer;
     }
 
     public Receiver getReceiver() {

@@ -1,6 +1,6 @@
 package com.express.service;
 
-import com.express.model.CustomerOrder;
+import com.express.model.entities.Customer;
 import com.express.model.Order;
 import com.express.model.OrderDetails;
 import com.express.model.Receiver;
@@ -48,11 +48,11 @@ public class OrderService {
 
         //Save CustomerOrder
         CustomerOrderDTO customerOrderDTO = orderRequest.getCustomerOrderDTO();
-        CustomerOrder customerOrder = new CustomerOrder();
-        BeanUtils.copyProperties(customerOrderDTO, customerOrder);
-        customerOrder.setId("CO-" + id);
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerOrderDTO, customer);
+        customer.setId("CO-" + id);
         customerOrderDTO.setId("CO-" + id);
-        customerOrderRepository.save(customerOrder);
+        customerOrderRepository.save(customer);
 
         //Save Receiver
         ReceiverDTO receiverDTO = orderRequest.getReceiverDTO();
@@ -72,7 +72,7 @@ public class OrderService {
         BeanUtils.copyProperties(orderDTO, order);
         order.setId(id);
         orderDTO.setId(id);
-        order.setCustomerOrder(customerOrder);
+        order.setCustomerOrder(customer);
         order.setReceiver(receiver);
         order.setOrderDetails(orderDetails);
         orderRepository.save(order);
