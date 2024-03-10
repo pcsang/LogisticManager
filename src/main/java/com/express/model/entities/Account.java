@@ -9,8 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @NoArgsConstructor
@@ -21,14 +20,21 @@ public class Account {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
     private String username;
     private String password;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "shipper_id")
+    @ManyToOne
+    @JoinColumn(name = "shippers_id")
     private Shipper shippers;
+
+    public Shipper getShippers() {
+        return shippers;
+    }
+
+    public void setShippers(Shipper shippers) {
+        this.shippers = shippers;
+    }
 
     public Shipper getShipper() {
         return shippers;
@@ -38,11 +44,11 @@ public class Account {
         this.shippers = shipper;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

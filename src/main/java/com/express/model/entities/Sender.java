@@ -8,45 +8,37 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "shipper_details")
-public class ShipperDetails {
+@Table(name = "sender")
+public class Sender {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    private String CompanyName;
-    private String name;
-    private String ContactName;
-    private String address1;
-    private String address2;
+    private String fullName;
+    private String email;
+    private String address;
     private String phone;
     private String country;
     private String city;
-    private String email;
     private String district;
     private String state;
     private String note;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "shippers_id")
-    private Shipper shippers;
-
-    public Shipper getShippers() {
-        return shippers;
+    @OneToMany(mappedBy = "sender")
+    private List<Order> order;
+    public List<Order> getOrder() {
+        return order;
     }
 
-    public void setShippers(Shipper shippers) {
-        this.shippers = shippers;
+    public void setOrder(List<Order> order) {
+        this.order = order;
     }
 
     public Integer getId() {
@@ -57,44 +49,28 @@ public class ShipperDetails {
         this.id = id;
     }
 
-    public String getCompanyName() {
-        return CompanyName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setCompanyName(String companyName) {
-        CompanyName = companyName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getContactName() {
-        return ContactName;
+    public String getAddress() {
+        return address;
     }
 
-    public void setContactName(String contactName) {
-        ContactName = contactName;
-    }
-
-    public String getAddress1() {
-        return address1;
-    }
-
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getPhone() {
@@ -119,14 +95,6 @@ public class ShipperDetails {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getDistrict() {

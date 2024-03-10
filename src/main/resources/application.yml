@@ -1,9 +1,11 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/express_manager
-    username: postgres
+#    url: jdbc:postgresql://localhost:5432/express_manager
+    url: jdbc:mysql://localhost:3306/logic_managerment
+    username: pcsang
     password: 123456
-    driver-class-name: org.postgresql.Driver
+#    driver-class-name: org.postgresql.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -11,7 +13,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQL81Dialect
+#        dialect: org.hibernate.dialect.PostgreSQL81Dialect
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 server:
   error:
     include-message: always

@@ -6,9 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import java.util.List;
 
 @Entity
 @Table(name = "shipper")
@@ -16,7 +19,7 @@ public class Shipper {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
 
     private String roles;
 
@@ -24,16 +27,21 @@ public class Shipper {
     @PrimaryKeyJoinColumn
     private ShipperDetails details;
 
-    @OneToOne(mappedBy = "shippers", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private Account account;
+    @OneToMany(mappedBy = "shippers")
+    private List<Account> accounts;
 
-    public Account getAccount() {
-        return account;
+    @OneToMany(mappedBy = "shippers")
+    private List<Partner> partners;
+
+    @OneToMany(mappedBy = "shippers")
+    private List<Order> orders;
+
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccount(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public ShipperDetails getDetails() {
@@ -44,11 +52,11 @@ public class Shipper {
         this.details = details;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -58,5 +66,25 @@ public class Shipper {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public List<Partner> getPartners() {
+        return partners;
+    }
+
+    public void setPartners(List<Partner> partners) {
+        this.partners = partners;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

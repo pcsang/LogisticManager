@@ -8,26 +8,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "shipper_details")
-public class ShipperDetails {
+@Table(name = "receiver")
+public class Receiver {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     private String CompanyName;
-    private String name;
+    private String FullName;
     private String ContactName;
+    private String postalCode;
     private String address1;
     private String address2;
+    private String address3;
     private String phone;
     private String country;
     private String city;
@@ -35,18 +35,15 @@ public class ShipperDetails {
     private String district;
     private String state;
     private String note;
+    @OneToOne(mappedBy = "receivers")
+    private Order order;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "shippers_id")
-    private Shipper shippers;
-
-    public Shipper getShippers() {
-        return shippers;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setShippers(Shipper shippers) {
-        this.shippers = shippers;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Integer getId() {
@@ -65,12 +62,12 @@ public class ShipperDetails {
         CompanyName = companyName;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return FullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        FullName = fullName;
     }
 
     public String getContactName() {
@@ -79,6 +76,14 @@ public class ShipperDetails {
 
     public void setContactName(String contactName) {
         ContactName = contactName;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public String getAddress1() {
@@ -95,6 +100,14 @@ public class ShipperDetails {
 
     public void setAddress2(String address2) {
         this.address2 = address2;
+    }
+
+    public String getAddress3() {
+        return address3;
+    }
+
+    public void setAddress3(String address3) {
+        this.address3 = address3;
     }
 
     public String getPhone() {
