@@ -1,6 +1,8 @@
 package com.express.model.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
@@ -18,6 +20,8 @@ import javax.persistence.Table;
 import java.sql.Date;
 import java.util.List;
 
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -44,96 +48,4 @@ public class Order {
     private String status;
     private String payStatus;
     private Integer numberOfPackage;
-
-    public Sender getSender() {
-        return sender;
-    }
-
-    public void setSender(Sender sender) {
-        this.sender = sender;
-    }
-
-    public Receiver getReceiver() {
-        return receivers;
-    }
-
-    public void setReceiver(Receiver receiver) {
-        this.receivers = receiver;
-    }
-
-    public Shipper getShipper() {
-        return shippers;
-    }
-
-    public void setShipper(Shipper shipper) {
-        this.shippers = shipper;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public List<Packages> getPackages() {
-        return packages;
-    }
-
-    public void setPackages(List<Packages> packages) {
-        this.packages = packages;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getPayStatus() {
-        return payStatus;
-    }
-
-    public void setPayStatus(String payStatus) {
-        this.payStatus = payStatus;
-    }
-
-    public int getNumberOfPackage() {
-        return numberOfPackage;
-    }
-
-    public void setNumberOfPackage(int numberOfPackage) {
-        this.numberOfPackage = numberOfPackage;
-    }
-
-    public Shipper getShippers() {
-        return shippers;
-    }
-
-    public void setShippers(Shipper shippers) {
-        this.shippers = shippers;
-    }
-
-    public Receiver getReceivers() {
-        return receivers;
-    }
-
-    public void setReceivers(Receiver receivers) {
-        this.receivers = receivers;
-    }
-
-    public Date getSentDate() {
-        return sentDate;
-    }
-
-    public void setSentDate(Date sentDate) {
-        this.sentDate = sentDate;
-    }
-
-    public void setNumberOfPackage(Integer numberOfPackage) {
-        this.numberOfPackage = numberOfPackage;
-    }
 }

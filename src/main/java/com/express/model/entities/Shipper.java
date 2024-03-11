@@ -1,5 +1,8 @@
 package com.express.model.entities;
 
+import lombok.Builder;
+import lombok.Data;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +16,8 @@ import javax.persistence.Table;
 
 import java.util.List;
 
+@Data
+@Builder
 @Entity
 @Table(name = "shipper")
 public class Shipper {
@@ -36,55 +41,4 @@ public class Shipper {
     @OneToMany(mappedBy = "shippers")
     private List<Order> orders;
 
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccount(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-    public ShipperDetails getDetails() {
-        return details;
-    }
-
-    public void setDetails(ShipperDetails details) {
-        this.details = details;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
-
-    public List<Partner> getPartners() {
-        return partners;
-    }
-
-    public void setPartners(List<Partner> partners) {
-        this.partners = partners;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 }
