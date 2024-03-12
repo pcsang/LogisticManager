@@ -11,7 +11,9 @@ import com.express.repository.ShipperRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -67,10 +69,30 @@ public class ShipperService {
         return shipperRepository.getReferenceById(id);
     }
 
-    public Shipper saveShipper(Shipper shipper) {
-        log.info("Save Shipper into database: {}", shipper.toString());
-        //save ShipperDetails in Shipper
-        ShipperDetails shipperDetails = shipperDetailsRepository.save(shipper.getDetails());
-        return shipperRepository.save(shipper);
+    @Transactional
+    public Shipper saveShipper(Shipper shipperRequest) {
+        log.info("Mapping data for Shipper ọbject");
+        Shipper shipper = new Shipper();
+        shipper.setRoles(shipperRequest.getRoles());
+        shipper.setDetails(shipperRequest.getDetails());
+        log.info("Mapping data for Account ọbject");
+        List<Account> accounts = new ArrayList<>();
+        for(Account ac: shipperRequest.getAccounts()) {
+            ac.setShippers(shipper);
+            accounts.add(ac);
+        }
+        log.info("Mapping data for Partner ọbject");
+        List<Partner> partners = new ArrayList<>();
+        for(Partner p : shipperRequest.getPartners()) {
+            p.setShippers(shipper);
+            partners.add(p);
+        }
+        log.info("Mapping data for Shipper ọbject to save");
+        shipper.setAccounts(accounts);
+        shipper.setPartners(partners);
+
+        log.info("Save Shipper into database");
+        Shipper shipperSaved = shipperRepository.save(shipper);
+        return shipperSaved;
     }
 }

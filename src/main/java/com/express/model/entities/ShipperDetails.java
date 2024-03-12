@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -40,8 +40,7 @@ public class ShipperDetails {
     private String state;
     private String note;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "shippers_id")
-    private Shipper shippers;
+    @OneToOne(mappedBy = "details")
+    private Shipper shipper;
+
 }

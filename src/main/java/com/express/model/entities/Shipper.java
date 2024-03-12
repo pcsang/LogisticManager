@@ -11,12 +11,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -32,17 +33,18 @@ public class Shipper {
 
     private String roles;
 
-    @OneToOne(mappedBy = "shippers", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "shipper_id", referencedColumnName = "id")
     private ShipperDetails details;
 
-    @OneToMany(mappedBy = "shippers")
+    @OneToMany(mappedBy = "shippers", cascade = CascadeType.ALL)
     private List<Account> accounts;
 
-    @OneToMany(mappedBy = "shippers")
+    @OneToMany(mappedBy = "shippers", cascade = CascadeType.ALL)
     private List<Partner> partners;
 
-    @OneToMany(mappedBy = "shippers")
+    @OneToMany(mappedBy = "shippers", cascade = CascadeType.ALL)
     private List<Order> orders;
 
 }

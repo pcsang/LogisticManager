@@ -1,5 +1,6 @@
 package com.express.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "shipper_id")
     private Shipper shippers;
     @OneToOne(cascade = CascadeType.ALL)

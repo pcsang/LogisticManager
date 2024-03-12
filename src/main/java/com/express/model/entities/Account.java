@@ -1,5 +1,6 @@
 package com.express.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class Account {
     private String password;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "shippers_id")
     private Shipper shippers;
 }
