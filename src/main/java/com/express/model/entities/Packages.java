@@ -1,10 +1,12 @@
 package com.express.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,13 +31,16 @@ public class Packages {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private int dimension;
+    private String dimension;
     private int weight;
-    @OneToMany(mappedBy = "packages")
+
+    @OneToMany(mappedBy = "packages", cascade = CascadeType.ALL)
     private List<Good> goods;
+
     private double total;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "order_id")
     private Order orders;
 }

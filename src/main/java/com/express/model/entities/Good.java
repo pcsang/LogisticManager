@@ -1,5 +1,6 @@
 package com.express.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,7 +35,9 @@ public class Good {
     private int weight;
     private double unitPrice;
     private double subTotal;
+
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "packages_id")
     private Packages packages;
 

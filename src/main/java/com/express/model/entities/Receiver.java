@@ -25,9 +25,7 @@ public class Receiver {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String CompanyName;
-    private String FullName;
-    private String ContactName;
+    private String fullName;
     private String postalCode;
     private String address1;
     private String address2;
@@ -39,6 +37,7 @@ public class Receiver {
     private String district;
     private String state;
     private String note;
+
     @OneToOne(mappedBy = "receivers")
     private Order order;
 }
