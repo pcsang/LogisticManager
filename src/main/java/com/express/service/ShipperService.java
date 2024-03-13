@@ -3,7 +3,6 @@ package com.express.service;
 import com.express.model.entities.Account;
 import com.express.model.entities.Partner;
 import com.express.model.entities.Shipper;
-import com.express.model.entities.ShipperDetails;
 import com.express.repository.AccountRepository;
 import com.express.repository.PartnerRepository;
 import com.express.repository.ShipperDetailsRepository;
