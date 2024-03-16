@@ -1,13 +1,16 @@
 package com.express.service;
 
+import com.express.model.AccountRequest;
 import com.express.model.entities.Account;
 import com.express.model.entities.Partner;
 import com.express.model.entities.Shipper;
+import com.express.model.entities.ShipperDetails;
 import com.express.repository.AccountRepository;
 import com.express.repository.PartnerRepository;
 import com.express.repository.ShipperDetailsRepository;
 import com.express.repository.ShipperRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,11 +46,20 @@ public class ShipperService {
         this.shipperRepository = shipperRepository;
     }
 
-    public List<Account> getAllAccounts() {
+    public List<Account> getAllAccounts(Integer id) {
         return accountRepository.findAll();
     }
 
-    public Account saveAccount(Account account) {
+    public Account saveAccount(AccountRequest accountRequest, Integer idShipper) {
+        Account account = new Account();
+        BeanUtils.copyProperties(accountRequest, account);
+        if (!ObjectUtils.isEmpty(idShipper)) {
+          Shipper shipper = shipperRepository.getReferenceById(idShipper);
+          if (!ObjectUtils.isEmpty(shipper)) {
+              log.info("Have data for id: {}", idShipper);
+              account.setShippers(shipper);
+          }
+        }
         log.info("Save Account into database: {}", account.toString());
         return accountRepository.save(account);
     }
@@ -56,7 +68,14 @@ public class ShipperService {
         return partnerRepository.findAll();
     }
 
-    public Partner savePartner(Partner partner) {
+    public Partner savePartner(Partner partner, Integer idShipper) {
+        if (!ObjectUtils.isEmpty(idShipper)) {
+            Shipper shipper = getShipperById(idShipper);
+            if (!ObjectUtils.isEmpty(shipper)) {
+                log.info("Have data for id: {}", idShipper);
+                partner.setShippers(shipper);
+            }
+        }
         log.info("Save Partner into database: {}", partner.toString());
         return partnerRepository.save(partner);
     }
@@ -74,7 +93,6 @@ public class ShipperService {
         log.info("Mapping data for Shipper object");
         Shipper shipper = new Shipper();
         shipper.setRoles(shipperRequest.getRoles());
-        shipper.setDetails(shipperRequest.getDetails());
 
         if (!ObjectUtils.isEmpty(shipperRequest.getAccounts())) {
             log.info("Mapping data for Account object");
@@ -99,6 +117,12 @@ public class ShipperService {
         log.info("Save Shipper into database");
         Shipper shipperSaved = shipperRepository.save(shipper);
         log.info("Completed to save Shipper to Database");
+
+        ShipperDetails shipperDetails = shipperRequest.getDetails();
+        shipperDetails.setShipper(shipperSaved);
+        log.info("Mapping Data for ShipperDetails");
+        ShipperDetails shipperDetailsSaved = shipperDetailsRepository.save(shipperDetails);
+        shipperSaved.setDetails(shipperDetailsSaved);
         return shipperSaved;
     }
 }

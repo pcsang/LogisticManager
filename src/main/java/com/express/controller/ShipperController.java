@@ -1,5 +1,6 @@
 package com.express.controller;
 
+import com.express.model.AccountRequest;
 import com.express.model.entities.Account;
 import com.express.model.entities.Partner;
 import com.express.model.entities.Shipper;
@@ -33,13 +34,13 @@ public class ShipperController {
     @GetMapping("/accounts")
     public List<Account> getAllAccounts(@RequestParam(required = false) Integer id){
         log.info("GET url: {}", "shipper/api/v1/accounts");
-        return shipperService.getAllAccounts();
+        return shipperService.getAllAccounts(id);
     }
 
     @PostMapping("/account")
-    public Account postAccount(@RequestBody Account account) {
+    public Account postAccount(@RequestBody AccountRequest account, @RequestParam(required = false) Integer idShipper) {
         log.info("POST url: {}", "shipper/api/v1/account");
-        return shipperService.saveAccount(account);
+        return shipperService.saveAccount(account, idShipper);
     }
 
     @GetMapping("/partners")
@@ -49,9 +50,9 @@ public class ShipperController {
     }
 
     @PostMapping("/partner")
-    public Partner postPartner(@RequestBody Partner partner) {
+    public Partner postPartner(@RequestBody Partner partner, @RequestParam(required = false) Integer idShipper) {
         log.info("POST url: {}", "shipper/api/v1/partner");
-        return shipperService.savePartner(partner);
+        return shipperService.savePartner(partner, idShipper);
     }
 
     @GetMapping("/shippers")

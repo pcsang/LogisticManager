@@ -14,7 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -38,8 +37,8 @@ public class Shipper {
     private String roles;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "shipper_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "shipper")
+    @ToString.Exclude
     private ShipperDetails details;
 
     @OneToMany(mappedBy = "shippers", cascade = CascadeType.ALL)

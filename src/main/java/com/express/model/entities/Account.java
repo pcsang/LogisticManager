@@ -37,7 +37,7 @@ public class Account {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "shippers_id")
+    @JoinColumn(name = "shipper_id")
     private Shipper shippers;
 
     @Override
