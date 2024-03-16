@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,28 +71,34 @@ public class ShipperService {
 
     @Transactional
     public Shipper saveShipper(Shipper shipperRequest) {
-        log.info("Mapping data for Shipper ọbject");
+        log.info("Mapping data for Shipper object");
         Shipper shipper = new Shipper();
         shipper.setRoles(shipperRequest.getRoles());
         shipper.setDetails(shipperRequest.getDetails());
-        log.info("Mapping data for Account ọbject");
-        List<Account> accounts = new ArrayList<>();
-        for(Account ac: shipperRequest.getAccounts()) {
-            ac.setShippers(shipper);
-            accounts.add(ac);
+
+        if (!ObjectUtils.isEmpty(shipperRequest.getAccounts())) {
+            log.info("Mapping data for Account object");
+            List<Account> accounts = new ArrayList<>();
+            for(Account ac: shipperRequest.getAccounts()) {
+                ac.setShippers(shipper);
+                accounts.add(ac);
+            }
+            shipper.setAccounts(accounts);
         }
-        log.info("Mapping data for Partner ọbject");
-        List<Partner> partners = new ArrayList<>();
-        for(Partner p : shipperRequest.getPartners()) {
-            p.setShippers(shipper);
-            partners.add(p);
+
+        if (!ObjectUtils.isEmpty(shipperRequest.getPartners())) {
+            log.info("Mapping data for Partner object");
+            List<Partner> partners = new ArrayList<>();
+            for(Partner p : shipperRequest.getPartners()) {
+                p.setShippers(shipper);
+                partners.add(p);
+            }
+            shipper.setPartners(partners);
         }
-        log.info("Mapping data for Shipper ọbject to save");
-        shipper.setAccounts(accounts);
-        shipper.setPartners(partners);
 
         log.info("Save Shipper into database");
         Shipper shipperSaved = shipperRepository.save(shipper);
+        log.info("Completed to save Shipper to Database");
         return shipperSaved;
     }
 }
