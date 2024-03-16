@@ -77,6 +77,10 @@ public class OrderService {
         Shipper shipper = shipperService.getShipperById(orderRequest.getShippers().getId());
         log.info("Order is delivered by Shipper: {}", shipper.getId());
 
+        Sender sender = orderRequest.getSender();
+        log.info("Save Sender to database");
+        Sender senderSaved = senderRepository.save(sender);
+
         Order order = new Order();
         order.setNumberOfPackage(orderRequest.getPackages().size());
         order.setPayStatus(orderRequest.getPayStatus());
@@ -84,14 +88,9 @@ public class OrderService {
         order.setStatus(orderRequest.getStatus());
         order.setReceivers(orderRequest.getReceivers());
         order.setShippers(shipper);
+        order.setSender(senderSaved);
         log.info("Save Order to database");
         Order orderSaved = orderRepository.save(order);
-
-        Sender sender = orderRequest.getSender();
-        orderSaved.setSender(sender);
-        log.info("Save Sender to database");
-        sender.setOrder(Collections.singletonList(orderSaved));
-        senderRepository.save(sender);
 
         log.info("Save Package to database");
         List<Packages> packagesList = new ArrayList<>();
