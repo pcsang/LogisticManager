@@ -4,6 +4,7 @@ import com.express.model.OrderRequest;
 import com.express.model.entities.Good;
 import com.express.model.entities.Order;
 import com.express.model.entities.Packages;
+import com.express.model.entities.Receiver;
 import com.express.model.entities.Sender;
 import com.express.model.entities.Shipper;
 import com.express.repository.GoodRepository;
@@ -11,16 +12,17 @@ import com.express.repository.OrderRepository;
 import com.express.repository.PackagesRepository;
 import com.express.repository.ReceiverRepository;
 import com.express.repository.SenderRepository;
-import com.express.repository.ShipperRepository;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -31,7 +33,6 @@ public class OrderService {
     private final GoodRepository goodRepository;
     private final OrderRepository orderRepository;
     private final ShipperService shipperService;
-    private final ShipperRepository shipperRepository;
 
     /**
      * Constructor of OrderService
@@ -42,7 +43,6 @@ public class OrderService {
      * @param goodRepository     goodRepository
      * @param orderRepository    orderRepository
      * @param shipperService     shipperService
-     * @param shipperRepository  shipperRepository
      */
     @Autowired
     public OrderService(SenderRepository senderRepository,
@@ -50,15 +50,13 @@ public class OrderService {
                         PackagesRepository packagesRepository,
                         GoodRepository goodRepository,
                         OrderRepository orderRepository,
-                        ShipperService shipperService,
-                        ShipperRepository shipperRepository) {
+                        ShipperService shipperService) {
         this.senderRepository = senderRepository;
         this.receiverRepository = receiverRepository;
         this.packagesRepository = packagesRepository;
         this.goodRepository = goodRepository;
         this.orderRepository = orderRepository;
         this.shipperService = shipperService;
-        this.shipperRepository = shipperRepository;
     }
 
     public List<Good> getAllGoods() {
@@ -67,6 +65,17 @@ public class OrderService {
 
     public List<Packages> getAllPackages() {
         return packagesRepository.findAll();
+    }
+
+    public List<Order> getOrders(Integer id) {
+        if(ObjectUtils.isEmpty(id)) {
+            log.info("Get all orders");
+            return orderRepository.findAll();
+        }
+        Optional<Order> order = orderRepository.findById(id);
+        List<Order> orders = new ArrayList<>();
+        order.ifPresent(orders::add);
+        return orders;
     }
 
     @SneakyThrows
@@ -110,4 +119,20 @@ public class OrderService {
 
         return order;
     }
+
+    public Receiver postReceiver(Receiver receiverRequest, Integer id) {
+        Optional<Order> orderSaved = orderRepository.findById(id);
+        orderSaved.ifPresent(receiverRequest::setOrder);
+        log.info("Save Receiver to database");
+        return receiverRepository.save(receiverRequest);
+    }
+
+    public Sender postSender(Sender sender, Integer idOrder) {
+        Optional<Order> orderSaved = orderRepository.findById(idOrder);
+        orderSaved.ifPresent(order -> sender.setOrder(Collections.singletonList(order)));
+        log.info("Save Sender to database");
+        return senderRepository.save(sender);
+    }
+
+
 }

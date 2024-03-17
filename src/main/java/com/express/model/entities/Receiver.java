@@ -1,5 +1,6 @@
 package com.express.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,6 +46,7 @@ public class Receiver {
     private String note;
 
     @OneToOne(mappedBy = "receivers")
+    @JsonIgnore
     private Order order;
 
     @Override
